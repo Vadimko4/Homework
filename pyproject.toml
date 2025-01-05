@@ -1,15 +1,19 @@
-[project]
+[tool.poetry]
 name = "homework"
 version = "0.1.0"
 description = ""
 authors = [
-    {name = "vadimko4",email = "vad.informat@gmail.com"}
-]
-readme = "README.md"
-requires-python = ">=3.13"
-dependencies = [
+    "vadimko4 "
 ]
 
+[tool.poetry.dependencies]
+python = ">=3.13"
+
+[tool.poetry.group.lint.dependencies]
+flake8 = "^7.1.1"
+mypy = "^1.14.1"
+isort = "^5.13.2"
+black = "^24.10.0"
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
