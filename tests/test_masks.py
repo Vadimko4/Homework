@@ -1,4 +1,5 @@
 import pytest
+#from tests.conftest import test_card_number_1, test_card_number_2
 from src.masks import get_mask_card_number, get_mask_account
 
 
