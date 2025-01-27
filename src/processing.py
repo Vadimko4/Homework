@@ -1,6 +1,6 @@
 def filter_by_state(operations: list[dict], state: str = 'EXECUTED') -> list[dict]:
     """
-    принимает список всех операций - возвращает только те, у которых статус = state
+    Принимает список всех операций - возвращает только те, у которых статус = state
     """
     if all(operation['state'] != state for operation in operations):
         raise ValueError('Нет операций с таким статусом')
@@ -10,19 +10,18 @@ def filter_by_state(operations: list[dict], state: str = 'EXECUTED') -> list[dic
 
 def sort_by_date(operations: list[dict], decreasing: bool = True) -> list[dict]:
     """
-    принимает список всех операций - новый список, отсортированный по дате (date)
-    если decreasing = True (значение по умолчанию) - сортирует по убыванию,
+    Принимает список всех операций - новый список, отсортированный по дате (date).
+    Если decreasing = True (значение по умолчанию) - сортирует по убыванию,
     иначе по возрастанию
     """
-    if any(len(operation['date']) != 26 or \
-           not (operation['date'])[:4].isdigit() or\
-           not (operation['date'])[5:7].isdigit() or\
-           not (operation['date'])[8:10].isdigit() \
+    if any((len(operation['date']) != 26 or
+            not (operation['date'])[:4].isdigit() or
+            not (operation['date'])[5:7].isdigit() or
+            not (operation['date'])[8:10].isdigit())
            for operation in operations):
         raise ValueError('Неверный формат даты')
 
-    if any(int(operation['date'][5:7]) not in range(1, 13) or\
-           int(operation['date'][8:10]) not in range(1, 32)\
+    if any(int(operation['date'][5:7]) not in range(1, 13) or int(operation['date'][8:10]) not in range(1, 32)
            for operation in operations):
         raise ValueError('Неверный формат даты')
 
