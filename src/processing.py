@@ -2,6 +2,9 @@ def filter_by_state(operations: list[dict], state: str = 'EXECUTED') -> list[dic
     """
     принимает список всех операций - возвращает только те, у которых статус = state
     """
+    if all(operation['state'] != state for operation in operations):
+        raise ValueError('Нет операций с таким статусом')
+
     return [i for i in operations if i['state'] == state]
 
 
