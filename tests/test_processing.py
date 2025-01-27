@@ -58,3 +58,33 @@ def test_sort_by_date_increasing(test_processing_list):
         {'id': 41428829, 'state': 'EXECUTED', 'date': '2019-07-03T18:35:29.512364'}])])
 def test_sort_by_date(test_processing_list, decreasing, expected):
     assert sort_by_date(test_processing_list, decreasing) == expected
+
+
+@pytest.mark.parametrize('decreasing, expected',[(False, [
+    {'id': 939719570, 'state': 'EXECUTED', 'date': '2018-06-30T02:08:58.425572'},
+    {'id': 594226727, 'state': 'CANCELED', 'date': '2018-09-12T21:27:25.241689'},
+    {'id': 615064591, 'state': 'CANCELED', 'date': '2018-10-14T08:21:33.419441'},
+    {'id': 615064592, 'state': 'CANCELED', 'date': '2018-10-14T08:21:33.419441'},
+    {'id': 41428829, 'state': 'EXECUTED', 'date': '2019-07-03T18:35:29.512364'}]),
+                                                 (True, [
+    {'id': 41428829, 'state': 'EXECUTED', 'date': '2019-07-03T18:35:29.512364'},
+    {'id': 615064592, 'state': 'CANCELED', 'date': '2018-10-14T08:21:33.419441'},
+    {'id': 615064591, 'state': 'CANCELED', 'date': '2018-10-14T08:21:33.419441'},
+    {'id': 594226727, 'state': 'CANCELED', 'date': '2018-09-12T21:27:25.241689'},
+    {'id': 939719570, 'state': 'EXECUTED', 'date': '2018-06-30T02:08:58.425572'}])])
+def test_sort_by_same_date(test_processing_list_same_data, decreasing, expected):
+    assert sort_by_date(test_processing_list_same_data, decreasing) == expected
+
+@pytest.mark.parametrize('wrong_operation', [
+    ({'id': 42428829, 'state': 'EXECUTED', 'date': '2019-07-03'}),
+    ({'id': 949719570, 'state': 'EXECUTED', 'date': '2018-06-30T02:08:58.42557278787878787878787878'}),
+    ({'id': 596226727, 'state': 'CANCELED', 'date': 'aaaa-09-12T21:27:25.241689'}),
+    ({'id': 625064591, 'state': 'CANCELED', 'date': '2018-aa-14T08:21:33.419441'}),
+    ({'id': 616064592, 'state': 'CANCELED', 'date': '2018-10-aaT08:21:33.419441'}),
+    ({'id': 615664592, 'state': 'CANCELED', 'date': '2018-99-14T08:21:33.419441'}),
+    ({'id': 615074592, 'state': 'CANCELED', 'date': '2018-10-99T08:21:33.419441'})])
+def test_sort_by_wrong_date(test_processing_list, wrong_operation):
+    test_wrong_processing_list = test_processing_list[::]
+    test_wrong_processing_list.append(wrong_operation)
+    with pytest.raises(ValueError):
+        sort_by_date(test_wrong_processing_list)
