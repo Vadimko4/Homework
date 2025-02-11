@@ -7,13 +7,13 @@ def filter_by_currency(transactions: list[dict], currency: str = 'USD'):
     if len(transactions) == 0:
         raise ValueError('Список транзакций не может быть пустым')
 
-    if any(i["operationAmount"]["currency"]["code"] not in 'USDEURRUB' for i in transactions):
+    if any(i["operationAmount"]["currency"]["code"].upper() not in 'USDEURRUB' for i in transactions):
         raise ValueError('Ошибка в списке транзакций: нет такой валюты!')
 
-    if currency not in 'USDEURRUB':
+    if currency.upper() not in 'USDEURRUB':
         raise ValueError('Ошибка запроса: нет такой валюты!')
 
-    return filter(lambda x: x["operationAmount"]["currency"]["code"] == currency, transactions)
+    return filter(lambda x: x["operationAmount"]["currency"]["code"] == currency.upper(), transactions)
 
 
 test_transactions = [{
