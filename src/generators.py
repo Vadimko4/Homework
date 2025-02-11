@@ -71,12 +71,12 @@ def card_number_generator(start_value: int = 1, fin_value: int = int('9' * 16)) 
             raise ValueError('Ошибка диапазона генерации номеров карт') # ввели недопустимые числа
     except Exception:
         # ввели не числа
-        raise ValueError('Некорректный ввод стартового и финишного значениq диапазона номеров карт')
+        raise ValueError('Некорректный ввод стартового и финишного значений диапазона номеров карт')
 
     return (get_valid_card_number_form(number) for number in range(start_value, fin_value + 1))
 
 
-if __name__ == '__main__':
+'''if __name__ == '__main__':
     test_transactions = [{
         "id": 939719570,
         "state": "EXECUTED",
@@ -134,4 +134,4 @@ if __name__ == '__main__':
 
     card_number = card_number_generator(1, int('9' * 16))
     for _ in range(10):
-        print(next(card_number))
+        print(next(card_number))'''
