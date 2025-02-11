@@ -2,7 +2,7 @@ from typing import Any
 
 import pytest
 
-from src.generators import filter_by_currency, transaction_descriptions, card_number_generator
+from src.generators import card_number_generator, filter_by_currency, transaction_descriptions
 
 
 def test_filter_by_currency_USD(test_transaction_list: Any) -> None:
@@ -54,8 +54,7 @@ def test_filter_by_currency_EUR(test_transaction_list: Any) -> None:
             },
             "description": "Перевод со счета на счет",
             "from": "Счет 19708645243227159521",
-            "to": "Счет 75651667383060284188"
-        }]
+            "to": "Счет 75651667383060284188"}]
 
 
 def test_filter_by_currency_RUB(test_transaction_list: Any) -> None:
@@ -73,8 +72,7 @@ def test_filter_by_currency_RUB(test_transaction_list: Any) -> None:
             },
             "description": "Перевод со счета на счет",
             "from": "Счет 44812258784861134719",
-            "to": "Счет 74489636417521191160"
-        },
+            "to": "Счет 74489636417521191160"},
                {
                    "id": 594226727,
                    "state": "CANCELED",
@@ -149,7 +147,7 @@ def test_transaction_descriptions_with_no_desription() -> None:
                                                                  ['0000 0000 0000 0004', '0000 0000 0000 0005',
                                                                   '0000 0000 0000 0006', '0000 0000 0000 0007'])
                                                                 ])
-def test_card_number_generator(start_number: int, fin_number: int, expected: Any):
+def test_card_number_generator(start_number: int, fin_number: int, expected: Any) -> Any:
     assert list(card_number_generator(start_number, fin_number)) == expected
 
 

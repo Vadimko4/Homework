@@ -1,5 +1,6 @@
 from typing import Any
 
+
 def filter_by_currency(transactions: list[dict], currency: str = 'USD') -> Any:
     """
     принимает на вход список словарей, представляющих транзакции
@@ -42,7 +43,7 @@ def transaction_descriptions(transactions: list[dict]) -> Any:
     return (item["description"] for item in transactions)
 
 
-def get_valid_card_number_form(number):
+def get_valid_card_number_form(number: int) -> str:
     """
     вспомогательная к функции card_number_generator
     принимает на вход число от 1 до 9999999999999999
@@ -66,9 +67,9 @@ def card_number_generator(start_value: int = 1, fin_value: int = int('9' * 16)) 
     """
 
     try:
-        if start_value >= fin_value or start_value <0 or fin_value < 2 \
+        if start_value >= fin_value or start_value < 0 or fin_value < 2 \
                 or fin_value > 10 ** 16 - 1 or start_value > 10 ** 16 - 1:
-            raise ValueError('Ошибка диапазона генерации номеров карт') # ввели недопустимые числа
+            raise ValueError('Ошибка диапазона генерации номеров карт')  # ввели недопустимые числа
     except Exception:
         # ввели не числа
         raise ValueError('Некорректный ввод стартового и финишного значений диапазона номеров карт')
