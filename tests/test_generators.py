@@ -2,7 +2,7 @@ from typing import Any
 
 import pytest
 
-from src.generators import filter_by_currency
+from src.generators import filter_by_currency, transaction_descriptions
 
 
 def test_filter_by_currency_USD(test_transaction_list: Any) -> None:
@@ -105,3 +105,32 @@ def test_filter_by_currency_with_wrong_currency_in_list() -> None:
 def test_filter_by_currency_with_wrong_currency_request() -> None:
     with pytest.raises(ValueError):
         filter_by_currency([{"operationAmount": {"currency": {"name": "EUR", "code": "EUR"}}}], "EEE")
+
+
+def test_transaction_descriptions(test_transaction_list: Any) -> None:
+    assert list(transaction_descriptions(test_transaction_list)) == \
+           ["Перевод организации", "Перевод со счета на счет", "Перевод со счета на счет",
+            "Перевод со счета на счет", "Перевод организации"]
+
+
+def test_transaction_descriptions_with_empty_list() -> None:
+    with pytest.raises(ValueError):
+        transaction_descriptions([])
+
+
+def test_transaction_descriptions_with_no_desription() -> None:
+    with pytest.raises(ValueError):
+        transaction_descriptions([{
+            "id": 939719570,
+            "state": "EXECUTED",
+            "date": "2018-06-30T02:08:58.425572",
+            "operationAmount": {
+                "amount": "9824.07",
+                "currency": {
+                    "name": "USD",
+                    "code": "USD"
+                }
+            },
+            "from": "Счет 75106830613657916952",
+            "to": "Счет 11776614605963066702"
+        }])
