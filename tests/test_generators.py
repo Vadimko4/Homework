@@ -2,7 +2,7 @@ from typing import Any
 
 import pytest
 
-from src.generators import filter_by_currency, transaction_descriptions
+from src.generators import filter_by_currency, transaction_descriptions, card_number_generator
 
 
 def test_filter_by_currency_USD(test_transaction_list: Any) -> None:
@@ -107,6 +107,11 @@ def test_filter_by_currency_with_wrong_currency_request() -> None:
         filter_by_currency([{"operationAmount": {"currency": {"name": "EUR", "code": "EUR"}}}], "EEE")
 
 
+def test_filter_by_currency_with_absent_currency() -> None:
+    with pytest.raises(ValueError):
+        filter_by_currency([{"operationAmount": {"currency": {"name": "EUR", "code": "EUR"}}}], 'BTC')
+
+
 def test_transaction_descriptions(test_transaction_list: Any) -> None:
     assert list(transaction_descriptions(test_transaction_list)) == \
            ["Перевод организации", "Перевод со счета на счет", "Перевод со счета на счет",
@@ -134,3 +139,27 @@ def test_transaction_descriptions_with_no_desription() -> None:
             "from": "Счет 75106830613657916952",
             "to": "Счет 11776614605963066702"
         }])
+
+
+@pytest.mark.parametrize('start_number, fin_number, expected', [(1, 6,
+                                                                 ['0000 0000 0000 0001', '0000 0000 0000 0002',
+                                                                  '0000 0000 0000 0003', '0000 0000 0000 0004',
+                                                                  '0000 0000 0000 0005', '0000 0000 0000 0006']),
+                                                                (4, 7,
+                                                                 ['0000 0000 0000 0004', '0000 0000 0000 0005',
+                                                                  '0000 0000 0000 0006', '0000 0000 0000 0007'])
+                                                                ])
+def test_card_number_generator(start_number: int, fin_number: int, expected: Any):
+    assert list(card_number_generator(start_number, fin_number)) == expected
+
+
+@pytest.mark.parametrize('start_number, fin_number', [(100, 1), (100, 100), (-32, 32), (10 ** 20, 1), (100, 10 ** 20)])
+def test_card_number_generator_with_wrong_values(start_number: int, fin_number: int) -> None:
+    with pytest.raises(ValueError):
+        card_number_generator(start_number, fin_number)
+
+
+@pytest.mark.parametrize('start_number, fin_number', [('1a00', 1), (100, '100')])
+def test_card_number_generator_with_wrong_input(start_number: Any, fin_number: Any) -> None:
+    with pytest.raises(ValueError):
+        card_number_generator(start_number, fin_number)
