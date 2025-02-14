@@ -1,6 +1,8 @@
 from decorators import log
 
-@log()  #"mylog.txt")
+
+#@log()
+@log("mylog.txt")
 def get_mask_card_number(card_number: int = 0) -> str:
     """
     принимает на вход номер карты и возвращает ее маску
