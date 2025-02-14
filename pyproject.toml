@@ -5,6 +5,7 @@ description = ""
 authors = [
     "vadimko4 "
 ]
+package = false
 
 
 [tool.poetry.dependencies]

@@ -1,4 +1,4 @@
-from src.processing import filter_by_state, sort_by_date
+'''from src.processing import filter_by_state, sort_by_date
 from src.widget import get_date, mask_account_card
 
 processing_test_list = [
@@ -13,4 +13,4 @@ print(get_date('2024-03-11T02:26:18.671407'))
 
 # New funcs - Homework 10.1 "Продвинутый Git"
 print(filter_by_state(processing_test_list))
-print(sort_by_date(processing_test_list))
+print(sort_by_date(processing_test_list))'''
