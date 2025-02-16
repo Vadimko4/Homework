@@ -1,8 +1,0 @@
-get_mask_card_number start_time = 1739565934.814936
-get_mask_card_number ok
-get_mask_card_number end_time = 1739565934.8150706
-
-get_mask_card_number start_time = 1739565934.815149
-get_mask_card_number error: Номер карты не может отсутствовать. Inputs: (0,), {}
-get_mask_card_number end_time = 1739565934.815184
-

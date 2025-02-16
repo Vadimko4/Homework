@@ -1,8 +1,3 @@
-from decorators import log
-
-
-#@log()
-@log("mylog.txt")
 def get_mask_card_number(card_number: int = 0) -> str:
     """
     принимает на вход номер карты и возвращает ее маску
@@ -49,4 +44,4 @@ def get_mask_account(account_number: int = 0) -> str:
 
 if __name__ == "__main__":
     print(get_mask_card_number(7000792289606361))
-    print(get_mask_card_number(0))
+    print(get_mask_card_number())
