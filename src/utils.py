@@ -9,12 +9,15 @@ def get_fin_transactions_from_json(file_name: str) -> list[dict]:
     возвращает список словарей с данными о финансовых транзакциях.
     Если файл пустой, содержит не список или не найден, функция возвращает пустой список.
     """
-    with open(file_name, encoding='utf-8') as f:
-        fin_transactions = json.load(f)
+    try:
+        with open(file_name, encoding='utf-8') as f:
+            fin_transactions = json.load(f)
+
+    except Exception:
+        fin_transactions = []
+
     return fin_transactions
 
 if __name__ == '__main__':
     print(PATH_TO_FILE)
-
-    fin_transactions = get_fin_transactions_from_json(PATH_TO_FILE)
-    print(fin_transactions)
+    print(get_fin_transactions_from_json(PATH_TO_FILE))
