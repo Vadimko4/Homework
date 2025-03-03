@@ -6,7 +6,7 @@ from src.utils import get_fin_transactions_from_json, PATH_TO_FILE
 def test_get_fin_transactions_from_json(mock_get):
     mock_get.return_value = []
     assert get_fin_transactions_from_json(PATH_TO_FILE) == []
-    #mock_get.assert_called_with()'''
+    #mock_get.assert_called_with(PATH_TO_FILE, encoding='utf-8')'''
 
 
 @patch('builtins.open', new_callable=mock_open, read_data='[]')
