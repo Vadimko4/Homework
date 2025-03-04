@@ -2,6 +2,7 @@ import os
 from dotenv import load_dotenv
 import requests
 
+
 # Загрузка переменных из .env-файла
 load_dotenv()
 
@@ -40,11 +41,12 @@ def get_transaction_amount(transaction: dict) -> float:
         }
         response = requests.get(url, headers=headers, params=payload)
         result_amount = response.json()["result"]
+        print(response.json())
         status_code = response.status_code
     else:
         raise ValueError('Такая валюта не предусмотрена')
 
-    return result_amount
+    return float(result_amount)
 
 
 if __name__ == '__main__':
