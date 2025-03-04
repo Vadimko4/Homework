@@ -1,7 +1,7 @@
 import os
-from dotenv import load_dotenv
-import requests
 
+import requests
+from dotenv import load_dotenv
 
 # Загрузка переменных из .env-файла
 load_dotenv()
@@ -26,10 +26,9 @@ def get_transaction_amount(transaction: dict) -> float:
     ):
         raise ValueError('Неверные данные о транзакции')
 
-    if transaction["operationAmount"] ["currency"]["code"] == "RUB":
+    if transaction["operationAmount"]["currency"]["code"] == "RUB":
         result_amount = transaction["operationAmount"]["amount"]
-    elif transaction["operationAmount"] ["currency"]["code"] in ("USD", "EUR"):
-        #exchange_rate
+    elif transaction["operationAmount"]["currency"]["code"] in ("USD", "EUR"):
         url = "https://api.apilayer.com/exchangerates_data/convert"
         headers = {
             "apikey": api_key
@@ -41,8 +40,7 @@ def get_transaction_amount(transaction: dict) -> float:
         }
         response = requests.get(url, headers=headers, params=payload)
         result_amount = response.json()["result"]
-        print(response.json())
-        status_code = response.status_code
+        # status_code = response.status_code
     else:
         raise ValueError('Такая валюта не предусмотрена')
 
@@ -51,13 +49,14 @@ def get_transaction_amount(transaction: dict) -> float:
 
 if __name__ == '__main__':
     print(get_transaction_amount({
-    "id": 41428829,
-    "state": "EXECUTED",
-    "date": "2019-07-03T18:35:29.512364",
-    "operationAmount": {
-      "amount": "100.37",
-      "currency": {
-        "name": "USD",
-        "code": "USD"
-      }
-    }}))
+        "id": 41428829,
+        "state": "EXECUTED",
+        "date": "2019-07-03T18:35:29.512364",
+        "operationAmount": {
+            "amount": "100.37",
+            "currency": {
+                "name": "USD",
+                "code": "USD"
+            }
+        }
+    }))

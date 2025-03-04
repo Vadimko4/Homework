@@ -1,5 +1,7 @@
-import pytest
 from unittest.mock import patch
+
+import pytest
+
 from src.external_api import get_transaction_amount
 
 
@@ -15,16 +17,14 @@ def test_get_transaction_amount_correct_rub(test_transaction_list):
     assert get_transaction_amount(test_transaction_list[3]) == 43318.34
 
 
-@pytest.mark.parametrize('wrong_transaction', [{},
-{
+@pytest.mark.parametrize('wrong_transaction', [{}, {
     "id": 41428829,
     "state": "EXECUTED",
     "date": "2019-07-03T18:35:29.512364",
     "description": "Перевод организации",
     "from": "MasterCard 7158300734726758",
     "to": "Счет 35383033474447895560"
-  },
-{
+  }, {
     "id": 41428829,
     "state": "EXECUTED",
     "date": "2019-07-03T18:35:29.512364",
@@ -37,8 +37,7 @@ def test_get_transaction_amount_correct_rub(test_transaction_list):
     "description": "Перевод организации",
     "from": "MasterCard 7158300734726758",
     "to": "Счет 35383033474447895560"
-  },
-{
+  }, {
     "id": 41428829,
     "state": "EXECUTED",
     "date": "2019-07-03T18:35:29.512364",
@@ -48,8 +47,7 @@ def test_get_transaction_amount_correct_rub(test_transaction_list):
     "description": "Перевод организации",
     "from": "MasterCard 7158300734726758",
     "to": "Счет 35383033474447895560"
-  },
-{
+  }, {
     "id": 41428829,
     "state": "EXECUTED",
     "date": "2019-07-03T18:35:29.512364",
@@ -62,8 +60,7 @@ def test_get_transaction_amount_correct_rub(test_transaction_list):
     "description": "Перевод организации",
     "from": "MasterCard 7158300734726758",
     "to": "Счет 35383033474447895560"
-  },
-{
+  }, {
     "id": 41428829,
     "state": "EXECUTED",
     "date": "2019-07-03T18:35:29.512364",
@@ -77,8 +74,7 @@ def test_get_transaction_amount_correct_rub(test_transaction_list):
     "description": "Перевод организации",
     "from": "MasterCard 7158300734726758",
     "to": "Счет 35383033474447895560"
-  },
-{
+  }, {
     "id": 41428829,
     "state": "EXECUTED",
     "date": "2019-07-03T18:35:29.512364",

@@ -1,6 +1,6 @@
-from unittest.mock import patch, mock_open
-from src.utils import get_fin_transactions_from_json, PATH_TO_FILE
+from unittest.mock import mock_open, patch
 
+from src.utils import PATH_TO_FILE, get_fin_transactions_from_json
 
 '''@patch('json.load')
 def test_get_fin_transactions_from_json(mock_get):
