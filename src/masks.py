@@ -1,5 +1,6 @@
 from src.logger import masks_logger
 
+
 def get_mask_card_number(card_number: int = 0) -> str:
     """
     принимает на вход номер карты и возвращает ее маску
@@ -11,7 +12,6 @@ def get_mask_card_number(card_number: int = 0) -> str:
     if card_number == 0:
         masks_logger.error('Номер карты отсутствовал')
         raise ValueError('Номер карты не может отсутствовать')
-
 
     card_number_s = str(card_number)
 
