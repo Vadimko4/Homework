@@ -1,7 +1,7 @@
 import json
 import os
 
-PATH_TO_FILE = os.path.join(os.path.dirname(__file__)[:-4], "data", "operations.json")
+PATH_TO_JSON_FILE = os.path.join(os.path.dirname(__file__)[:-4], "data", "operations.json")
 
 
 def get_fin_transactions_from_json(file_name: str) -> list[dict]:
@@ -21,5 +21,5 @@ def get_fin_transactions_from_json(file_name: str) -> list[dict]:
 
 
 if __name__ == '__main__':
-    print(PATH_TO_FILE)
-    print(get_fin_transactions_from_json(PATH_TO_FILE))
+    print(PATH_TO_JSON_FILE)
+    print(get_fin_transactions_from_json(PATH_TO_JSON_FILE))
