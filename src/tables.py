@@ -11,9 +11,13 @@ def get_transactions_list_from_csv(csv_file_name: str) -> list[dict]:
     """
     считывает список транзакций (словари) из csv файла
     """
-    with open(csv_file_name, encoding='utf-8') as file:
-        reader = csv.DictReader(file, delimiter=';')
-        transactions_list = [row for row in reader]
+    try:
+        with open(csv_file_name, encoding='utf-8') as file:
+            reader = csv.DictReader(file, delimiter=';')
+            transactions_list = [row for row in reader]
+
+    except Exception:
+        transactions_list = []
 
     return transactions_list
 
@@ -22,8 +26,12 @@ def get_transactions_list_from_xlsx(xlsx_file_name: str) -> list[dict]:
     """
     считывает список транзакций (словари) из xlsx файла
     """
-    excel_data = pd.read_excel(xlsx_file_name)
-    transactions_list = excel_data.to_dict(orient='records')
+    try:
+        excel_data = pd.read_excel(xlsx_file_name)
+        transactions_list = excel_data.to_dict(orient='records')
+
+    except Exception:
+        transactions_list = []
 
     return transactions_list
 
