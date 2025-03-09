@@ -1,6 +1,6 @@
+import csv
 import os
 
-import csv
 import pandas as pd
 
 PATH_TO_TRANSACTIONS_CSV_FILE = os.path.join(os.path.dirname(__file__)[:-4], "data", "transactions.csv")

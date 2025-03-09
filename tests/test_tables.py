@@ -1,7 +1,7 @@
 from unittest.mock import mock_open, patch
 
-from src.tables import PATH_TO_TRANSACTIONS_CSV_FILE, PATH_TO_TRANSACTIONS_XLSX_FILE, \
-    get_transactions_list_from_csv, get_transactions_list_from_xlsx
+from src.tables import (PATH_TO_TRANSACTIONS_CSV_FILE, PATH_TO_TRANSACTIONS_XLSX_FILE, get_transactions_list_from_csv,
+                        get_transactions_list_from_xlsx)
 
 
 @patch('builtins.open', new_callable=mock_open, read_data='[]')
