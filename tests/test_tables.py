@@ -14,3 +14,10 @@ def test_get_transactions_list_from_csv(mock_csv_DictReader, mock_open):
     assert result == []
     mock_open.assert_called_once_with(PATH_TO_TRANSACTIONS_CSV_FILE, encoding='utf-8')
     mock_csv_DictReader.assert_called_once()
+
+
+@patch('pandas.read_excel')
+def test_get_transactions_list_from_xlsx(mock_get):
+    mock_get.return_value.to_dict.return_value = []
+    assert get_transactions_list_from_xlsx(PATH_TO_TRANSACTIONS_XLSX_FILE) == []
+    mock_get.assert_called_with(PATH_TO_TRANSACTIONS_XLSX_FILE)
