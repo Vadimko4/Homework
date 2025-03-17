@@ -5,7 +5,7 @@ def filter_by_state(operations: list[dict], state: str = 'EXECUTED') -> list[dic
     if all(operation['state'] != state for operation in operations):
         raise ValueError('Нет операций с таким статусом')
 
-    return [i for i in operations if i['state'] == state]
+    return [operation for operation in operations if operation.get('state') == state]
 
 
 def sort_by_date(operations: list[dict], decreasing: bool = True) -> list[dict]:
@@ -29,7 +29,7 @@ def sort_by_date(operations: list[dict], decreasing: bool = True) -> list[dict]:
     return sorted_operations
 
 
-'''if __name__ == '__main__':
+if __name__ == '__main__':
     test_list = [
         {'id': 41428829, 'state': 'EXECUTED', 'date': '2019-07-03T18:35:29.512364'},
         {'id': 939719570, 'state': 'EXECUTED', 'date': '2018-06-30T02:08:58.425572'},
@@ -37,5 +37,5 @@ def sort_by_date(operations: list[dict], decreasing: bool = True) -> list[dict]:
         {'id': 615064591, 'state': 'CANCELED', 'date': '2018-10-14T08:21:33.419441'},
         {'id': 615064592, 'state': 'CANCELED', 'date': '2018-10-14T08:21:33.419441'}
     ]
-    print(filter_by_state(test_list))
-    print(sort_by_date(test_list, True))'''
+    print(filter_by_state(test_list, 'EXECUTED'))
+    print(sort_by_date(test_list, True))

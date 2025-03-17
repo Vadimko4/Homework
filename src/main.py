@@ -1,4 +1,4 @@
-from src.utils import  get_fin_transactions_from_json, PATH_TO_JSON_FILE
+from src.utils import get_fin_transactions_from_json, PATH_TO_JSON_FILE
 from src.tables import get_transactions_list_from_csv, get_transactions_list_from_xlsx, \
     PATH_TO_TRANSACTIONS_XLSX_FILE, PATH_TO_TRANSACTIONS_CSV_FILE
 from src.processing import filter_by_state, sort_by_date
@@ -37,6 +37,7 @@ user_cases = {'1': 'EXECUTED', '2': 'CANCELED', '3': 'PENDING'}
 transactions_list = filter_by_state(transactions_list, user_cases[user_answer])
 print(f'\nПрограмма: Операции отфильтрованы по статусу "{user_cases[user_answer]}"')
 
+
 print("\nПрограмма: Отсортировать операции по дате? (Да/Нет)")
 user_answer = foolproof_user_input(['ДА', 'НЕТ'])
 if user_answer == 'ДА':
@@ -50,9 +51,12 @@ if user_answer == 'ДА':
 print("\nПрограмма: Выводить только рублевые тразакции? (Да/Нет)")
 user_answer = foolproof_user_input(['ДА', 'НЕТ'])
 if user_answer == 'ДА':
-    transactions_list = filter_by_currency(transactions_list, 'РУБ')
+    transactions_list = [transaction for transaction in filter_by_currency(transactions_list, 'RUB')]
+    # for i in filter_by_currency(transactions_list, 'RUB'):
+    #     print(i)
 
 print("\nПрограмма: Отфильтровать список транзакций по определенному слову в описании? (Да/Нет)")
 user_answer = foolproof_user_input(['ДА', 'НЕТ'])
 
 print('Программа: Распечатываю итоговый список транзакций...')
+print(transactions_list)

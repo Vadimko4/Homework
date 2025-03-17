@@ -27,4 +27,4 @@ def get_fin_transactions_from_json(file_name: str = '') -> list[dict]:
 
 
 if __name__ == '__main__':
-    print(get_fin_transactions_from_json(PATH_TO_JSON_FILE))
+    print(get_fin_transactions_from_json(PATH_TO_JSON_FILE)[0]['state'])
