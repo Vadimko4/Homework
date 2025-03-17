@@ -1,16 +1,38 @@
-'''from src.processing import filter_by_state, sort_by_date
-from src.widget import get_date, mask_account_card
+def foolproof_user_input(valid_values: list[str]) -> str:
+    user_answer = ''
+    while user_answer not in valid_values:
+        user_answer = input('\nПользователь: ').upper()
+        if user_answer not in valid_values:
+            print("Программа: неверный ввод, попробуйте ещё раз")
+    return user_answer
 
-processing_test_list = [
-        {'id': 41428829, 'state': 'EXECUTED', 'date': '2019-07-03T18:35:29.512364'},
-        {'id': 939719570, 'state': 'EXECUTED', 'date': '2018-06-30T02:08:58.425572'},
-        {'id': 594226727, 'state': 'CANCELED', 'date': '2018-09-12T21:27:25.241689'},
-        {'id': 615064591, 'state': 'CANCELED', 'date': '2018-10-14T08:21:33.419441'}]
 
-print(mask_account_card('Visa Platinum 7000792289606361'))  # Visa Platinum 7000 79** **** 6361
-print(mask_account_card('Счет 73654108430135874305'))  # Счет **4305
-print(get_date('2024-03-11T02:26:18.671407'))
+print("""Программа: Привет! Добро пожаловать в программу работы с банковскими транзакциями. 
 
-# New funcs - Homework 10.1 "Продвинутый Git"
-print(filter_by_state(processing_test_list))
-print(sort_by_date(processing_test_list))'''
+Выберите необходимый пункт меню:
+1. Получить информацию о транзакциях из JSON-файла
+2. Получить информацию о транзакциях из CSV-файла
+3. Получить информацию о транзакциях из XLSX-файла""")
+user_answer = foolproof_user_input(['1', '2', '3'])
+user_cases = {'1': 'JSON-файл', '2': 'CSV-файл', '3': 'XLSX-файл'}
+print(f"\nПрограмма: для обработки выбран {user_cases[user_answer]}")
+
+print("""\nПрограмма: Введите статус, по которому необходимо выполнить фильтрацию. 
+Доступные для фильтровки статусы: EXECUTED, CANCELED, PENDING (1/2/3)""")
+user_answer = foolproof_user_input(['1', '2', '3'])
+user_cases = {'1': 'EXECUTED', '2': 'CANCELED', '3': 'PENDING'}
+print(f'\nПрограмма: Операции отфильтрованы по статусу "{user_answer}"')
+
+print("\nПрограмма: Отсортировать операции по дате? (Да/Нет)")
+user_answer = foolproof_user_input(['ДА', 'НЕТ'])
+
+print("\nПрограмма: Отсортировать по возрастанию или по убыванию? (1/2)")
+user_answer = foolproof_user_input(['1', '2'])
+
+print("\nПрограмма: Выводить только рублевые тразакции? (Да/Нет)")
+user_answer = foolproof_user_input(['ДА', 'НЕТ'])
+
+print("\nПрограмма: Отфильтровать список транзакций по определенному слову в описании? (Да/Нет)")
+user_answer = foolproof_user_input(['ДА', 'НЕТ'])
+
+print('Программа: Распечатываю итоговый список транзакций...')
