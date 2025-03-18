@@ -10,6 +10,11 @@ def filter_by_currency(transactions: list[dict], currency: str = 'USD') -> Any:
     if len(transactions) == 0:
         raise ValueError('Список транзакций не может быть пустым')
 
+    #нет нужных ключей в одном или нескольких словарях
+    if any(transaction.get("operationAmount") == None or transaction.get("operationAmount").get("currency") == None \
+           or transaction.get("operationAmount").get("currency").get("code") == None for transaction in transactions):
+        raise ValueError('Ошибка в списке транзакций: отсутствуют необходимые ключи!')
+
     #  некорректная валюта в списке транзакций
     if any(i["operationAmount"]["currency"]["code"].upper() not in 'USDEURRUBBTC' for i in transactions):
         raise ValueError('Ошибка в списке транзакций: нет такой валюты!')
@@ -77,7 +82,7 @@ def card_number_generator(start_value: int = 1, fin_value: int = int('9' * 16)) 
     return (get_valid_card_number_form(number) for number in range(start_value, fin_value + 1))
 
 
-'''if __name__ == '__main__':
+if __name__ == '__main__':
     test_transactions = [{
         "id": 939719570,
         "state": "EXECUTED",
@@ -135,4 +140,4 @@ def card_number_generator(start_value: int = 1, fin_value: int = int('9' * 16)) 
 
     card_number = card_number_generator(1, int('9' * 16))
     for _ in range(10):
-        print(next(card_number))'''
+        print(next(card_number))

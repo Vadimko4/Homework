@@ -14,6 +14,9 @@ def sort_by_date(operations: list[dict], decreasing: bool = True) -> list[dict]:
     Если decreasing = True (значение по умолчанию) - сортирует по убыванию,
     иначе по возрастанию
     """
+    if any(operation.get('date') is None for operation in operations):
+        raise ValueError('В списке транзакций отсутствует ключ "date"')
+
     if any((len(operation['date']) != 26 or
             not (operation['date'])[:4].isdigit() or
             not (operation['date'])[5:7].isdigit() or

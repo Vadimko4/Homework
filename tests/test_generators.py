@@ -105,9 +105,17 @@ def test_filter_by_currency_with_wrong_currency_request() -> None:
         filter_by_currency([{"operationAmount": {"currency": {"name": "EUR", "code": "EUR"}}}], "EEE")
 
 
-def test_filter_by_currency_with_absent_currency() -> None:
+def test_filter_by_currency_with_missing_currency() -> None:
     with pytest.raises(ValueError):
         filter_by_currency([{"operationAmount": {"currency": {"name": "EUR", "code": "EUR"}}}], 'BTC')
+
+
+@pytest.mark.parametrize('transactions', [[{}],
+                                          [{"operationAmount": {}}],
+                                          [{"operationAmount": {"currency": {}}}]])
+def test_filter_by_currency_with_missing_keys(transactions) -> None:
+    with pytest.raises(ValueError):
+        filter_by_currency(transactions)
 
 
 def test_transaction_descriptions(test_transaction_list: Any) -> None:
