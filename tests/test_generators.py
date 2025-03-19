@@ -89,6 +89,7 @@ def test_filter_by_currency_RUB(test_transaction_list: Any) -> None:
                    "to": "Счет 14211924144426031657"
                }]
 
+
 def test_filter_by_currency_xls(test_transaction_list_xls):
     assert [i for i in filter_by_currency(test_transaction_list_xls, "RUB", 'xls')] == [
         {
@@ -122,8 +123,7 @@ def test_filter_by_currency_xls_with_empty_dict_in_list():
             {
                 "operationAmount":
                     {"currency":
-                         {"code": "RUB"
-                          }
+                        {"code": "RUB"}
                      }
             },
             {}
@@ -132,9 +132,7 @@ def test_filter_by_currency_xls_with_empty_dict_in_list():
             [
                 {
                     "operationAmount":
-                        {"currency":
-                             {"code": "RUB"
-                              }
+                        {"currency": {"code": "RUB"}
                          }
                 }
             ])

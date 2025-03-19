@@ -11,9 +11,12 @@ def filter_by_currency(transactions: list[dict], currency: str = 'USD', records_
 
     # убираем транзакции, в которых нет ключей "operationAmount", "currency", "code"
     if records_type == 'json':
-        transactions = [i for i in transactions if not i.get("operationAmount") is None and
-                    not i.get("operationAmount").get("currency") is None and
-                    not i.get("operationAmount").get("currency").get("code") is None]
+        transactions = \
+            [
+                i for i in transactions if not i.get("operationAmount") is None
+                and not i.get("operationAmount").get("currency") is None
+                and not i.get("operationAmount").get("currency").get("code") is None
+            ]
     else:
         transactions = [i for i in transactions if not i.get("currency_code") is None]
 

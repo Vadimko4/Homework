@@ -1,6 +1,4 @@
-import pytest
-
-from src.refinder import get_required_operations_list, get_categories_count
+from src.refinder import get_categories_count, get_required_operations_list
 
 
 def test_get_required_operations_list(test_transaction_list):
