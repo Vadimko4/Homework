@@ -44,12 +44,6 @@ def transaction_descriptions(transactions: list[dict]) -> Any:
     # убираем транзакции, в которых нет ключа "description"
     transactions = [i for i in transactions if not i.get("description") is None]
 
-    try:
-        has_description = all(item["description"] for item in transactions)
-
-    except Exception:
-        raise ValueError('В транзакциях отсутствует описание')
-
     return (item["description"] for item in transactions)
 
 

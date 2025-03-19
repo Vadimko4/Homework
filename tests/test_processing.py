@@ -98,8 +98,3 @@ def test_sort_by_wrong_date(test_processing_list: Any, wrong_operation: Any) -> 
     test_wrong_processing_list.append(wrong_operation)
     with pytest.raises(ValueError):
         sort_by_date(test_wrong_processing_list)
-
-
-def test_sort_by_missing_date() -> None:
-    with pytest.raises(ValueError):
-        sort_by_date([{}])

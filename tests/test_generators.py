@@ -121,24 +121,6 @@ def test_transaction_descriptions_with_empty_list() -> None:
         transaction_descriptions([])
 
 
-def test_transaction_descriptions_with_no_desription() -> None:
-    with pytest.raises(ValueError):
-        transaction_descriptions([{
-            "id": 939719570,
-            "state": "EXECUTED",
-            "date": "2018-06-30T02:08:58.425572",
-            "operationAmount": {
-                "amount": "9824.07",
-                "currency": {
-                    "name": "USD",
-                    "code": "USD"
-                }
-            },
-            "from": "Счет 75106830613657916952",
-            "to": "Счет 11776614605963066702"
-        }])
-
-
 @pytest.mark.parametrize('start_number, fin_number, expected', [(1, 6,
                                                                  ['0000 0000 0000 0001', '0000 0000 0000 0002',
                                                                   '0000 0000 0000 0003', '0000 0000 0000 0004',
