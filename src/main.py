@@ -1,3 +1,5 @@
+from collections import Counter
+
 from src.utils import get_fin_transactions_from_json, PATH_TO_JSON_FILE
 from src.tables import get_transactions_list_from_csv, get_transactions_list_from_xlsx, \
     PATH_TO_TRANSACTIONS_XLSX_FILE, PATH_TO_TRANSACTIONS_CSV_FILE
@@ -61,8 +63,21 @@ def main():
         search_bar = input('\nПрограмма: введите слово для фильтрации: ').lower()
         transactions_list = get_required_operations_list(transactions_list, search_bar)
 
-    print('Программа: Распечатываю итоговый список транзакций...')
-    print(*transactions_list, sep='\n')
+    categories_list = list(set(i.get('description') for i in transactions_list))
+    categories_with_count_dict = get_categories_count(transactions_list, categories_list)
 
+    transactions_count = sum(categories_with_count_dict.values())
+    if transactions_count:
+        print('\nПрограмма: Распечатываю итоговый список транзакций...')
+        print(f'\nВсего банковских операций в выборке: {transactions_count}')
+        for key, value in categories_with_count_dict.items():
+            print(f'{key}: {value}')
+
+        print()
+        for i in transactions_list:
+            print()
+        print(*transactions_list, sep='\n')
+    else:
+        print('\nПрограмма: Не найдено ни одной транзакции, подходящей под ваши условия фильтрации')
 
 main()
