@@ -34,7 +34,7 @@ def sort_by_date(operations: list[dict], decreasing: bool = True) -> list[dict]:
     return sorted_operations
 
 
-if __name__ == '__main__':
+'''if __name__ == '__main__':
     test_list = [
         {'id': 41428829, 'state': 'EXECUTED', 'date': '2019-07-03T18:35:29.512364'},
         {'id': 939719570, 'state': 'EXECUTED', 'date': '2018-06-30T02:08:58.425572'},
@@ -44,4 +44,4 @@ if __name__ == '__main__':
         {}
     ]
     print(filter_by_state(test_list, 'EXECUTED'))
-    print(sort_by_date(test_list, True))
+    print(sort_by_date(test_list, True))'''

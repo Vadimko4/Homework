@@ -10,18 +10,15 @@ def filter_by_currency(transactions: list[dict], currency: str = 'USD', records_
     """
 
     # убираем транзакции, в которых нет ключей "operationAmount", "currency", "code"
-    transactions = [i for i in transactions if (not i.get("operationAmount") is None and
+    if records_type == 'json':
+        transactions = [i for i in transactions if not i.get("operationAmount") is None and
                     not i.get("operationAmount").get("currency") is None and
-                    not i.get("operationAmount").get("currency").get("code") is None) or
-                    (not i.get("currency_code") is None)]
+                    not i.get("operationAmount").get("currency").get("code") is None]
+    else:
+        transactions = [i for i in transactions if not i.get("currency_code") is None]
 
     if not transactions:
         return []
-
-    '''if transactions[0].get("operationAmount") is None:
-        records_type = 'xls'
-    else:
-        records_type = 'json'''
 
     #  некорректная валюта в списке транзакций
     if records_type == 'json':
@@ -92,7 +89,7 @@ def card_number_generator(start_value: int = 1, fin_value: int = int('9' * 16)) 
     return (get_valid_card_number_form(number) for number in range(start_value, fin_value + 1))
 
 
-if __name__ == '__main__':
+'''if __name__ == '__main__':
     test_transactions = [{
         "id": 939719570,
         "state": "EXECUTED",
@@ -151,4 +148,4 @@ if __name__ == '__main__':
 
     card_number = card_number_generator(1, int('9' * 16))
     for _ in range(10):
-        print(next(card_number))
+        print(next(card_number))'''

@@ -89,6 +89,58 @@ def test_filter_by_currency_RUB(test_transaction_list: Any) -> None:
                    "to": "Счет 14211924144426031657"
                }]
 
+def test_filter_by_currency_xls(test_transaction_list_xls):
+    assert [i for i in filter_by_currency(test_transaction_list_xls, "RUB", 'xls')] == [
+        {
+            'id': '651026',
+            'state': 'EXECUTED',
+            'date': '2021-07-10T20:52:54Z',
+            'Amount': '27596',
+            'currency_name': 'Ruble',
+            'currency_code': 'RUB',
+            'from': '',
+            'to': 'Счет 41878599375303475996',
+            'description': 'Открытие вклада'
+        },
+        {
+            'id': '4653425',
+            'state': 'EXECUTED',
+            'date': '2020-03-10T07:48:21Z',
+            'Amount': '22131',
+            'currency_name': 'Ruble',
+            'currency_code': 'RUB',
+            'from': '',
+            'to': 'Счет 58936710508356884628',
+            'description': 'Открытие вклада'
+        }
+    ]
+
+
+def test_filter_by_currency_xls_with_empty_dict_in_list():
+    assert ([i for i in filter_by_currency(
+        [
+            {
+                "operationAmount":
+                    {"currency":
+                         {"code": "RUB"
+                          }
+                     }
+            },
+            {}
+        ],
+        "RUB", "json")] ==
+            [
+                {
+                    "operationAmount":
+                        {"currency":
+                             {"code": "RUB"
+                              }
+                         }
+                }
+            ])
+    assert (([i for i in filter_by_currency([{"currency_code": "RUB"}, {}], "RUB", "xls")]) ==
+            [{"currency_code": "RUB"}])
+
 
 def test_filter_by_currency_with_wrong_currency_in_list() -> None:
     with pytest.raises(ValueError):

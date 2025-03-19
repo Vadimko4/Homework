@@ -72,6 +72,9 @@ def main():
 
     transactions_count = sum(categories_with_count_dict.values())
     if transactions_count:
+        print(transactions_list)
+        input()
+
         print('\nПрограмма: Распечатываю итоговый список транзакций...')
         print(f'\nВсего банковских операций в выборке: {transactions_count}')
         for key, value in categories_with_count_dict.items():

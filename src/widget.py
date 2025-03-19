@@ -57,8 +57,8 @@ def get_date(date: str = '') -> str:
     return f'{date[8: 10]}.{date[5: 7]}.{date[: 4]}'
 
 
-if __name__ == '__main__':
-    '''print(mask_account_card('Visa Classic 6831982476737658'))
+'''if __name__ == '__main__':
+    print(mask_account_card('Visa Classic 6831982476737658'))
     print(get_date('2024-03-11T02:26:18.671407'))
-    print(mask_account_card('American Express 5313948287096164'))'''
-    print(mask_account_card('Discover 0329774489991288'))
+    print(mask_account_card('American Express 5313948287096164'))
+    print(mask_account_card('Discover 0329774489991288'))'''
