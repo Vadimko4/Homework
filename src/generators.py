@@ -10,13 +10,14 @@ def filter_by_currency(transactions: list[dict], currency: str = 'USD') -> Any:
     if len(transactions) == 0:
         raise ValueError('Список транзакций не может быть пустым')
 
-    #нет нужных ключей в одном или нескольких словарях
-    if any(transaction.get("operationAmount") == None or transaction.get("operationAmount").get("currency") == None \
-           or transaction.get("operationAmount").get("currency").get("code") == None for transaction in transactions):
-        raise ValueError('Ошибка в списке транзакций: отсутствуют необходимые ключи!')
+    # убираем транзакции, в которых нет ключей "operationAmount", "currency", "code"
+    transactions = [i for i in transactions if not i.get("operationAmount") is None and
+                    not i.get("operationAmount").get("currency") is None and
+                    not i.get("operationAmount").get("currency").get("code") is None]
 
     #  некорректная валюта в списке транзакций
-    if any(i["operationAmount"]["currency"]["code"].upper() not in 'USDEURRUBBTC' for i in transactions):
+    if any(i.get("operationAmount").get("currency").get("code").upper() not in 'USDEURRUBBTC'
+           for i in transactions if not i.get("operationAmount") is None):
         raise ValueError('Ошибка в списке транзакций: нет такой валюты!')
 
     #  некорректная валюта в параметре currency
@@ -24,10 +25,11 @@ def filter_by_currency(transactions: list[dict], currency: str = 'USD') -> Any:
         raise ValueError('Ошибка запроса: нет такой валюты!')
 
     # валюта корректная, но таких операций в списке нет
-    if all(i["operationAmount"]["currency"]["code"].upper() != currency.upper() for i in transactions):
+    if all(i.get("operationAmount").get("currency").get("code").upper() != currency.upper() for i in transactions
+           if not i.get("operationAmount")is None):
         raise ValueError('В списке транзакций нет ни одной операции с такой валютой')
 
-    return filter(lambda x: x["operationAmount"]["currency"]["code"] == currency.upper(), transactions)
+    return filter(lambda x: x.get("operationAmount").get("currency").get("code") == currency.upper(), transactions)
 
 
 def transaction_descriptions(transactions: list[dict]) -> Any:
@@ -38,6 +40,9 @@ def transaction_descriptions(transactions: list[dict]) -> Any:
 
     if len(transactions) == 0:
         raise ValueError('Список транзакций не может быть пустым')
+
+    # убираем транзакции, в которых нет ключа "description"
+    transactions = [i for i in transactions if not i.get("description") is None]
 
     try:
         has_description = all(item["description"] for item in transactions)
@@ -127,7 +132,8 @@ if __name__ == '__main__':
             "description": "Перевод со счета на счет",
             "from": "Счет 19708645243227159521",
             "to": "Счет 75651667383060284188"
-        }]
+        },
+        {}]
 
     tr = filter_by_currency(test_transactions)
     print(next(tr))
