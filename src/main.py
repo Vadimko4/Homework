@@ -3,6 +3,7 @@ from src.tables import get_transactions_list_from_csv, get_transactions_list_fro
     PATH_TO_TRANSACTIONS_XLSX_FILE, PATH_TO_TRANSACTIONS_CSV_FILE
 from src.processing import filter_by_state, sort_by_date
 from src.generators import filter_by_currency
+from src.refinder import get_required_operations_list, get_categories_count
 
 
 def foolproof_user_input(valid_values: list[str]) -> str:
@@ -53,11 +54,12 @@ def main():
     user_answer = foolproof_user_input(['ДА', 'НЕТ'])
     if user_answer == 'ДА':
         transactions_list = [transaction for transaction in filter_by_currency(transactions_list, 'RUB')]
-        # for i in filter_by_currency(transactions_list, 'RUB'):
-        #     print(i)
 
     print("\nПрограмма: Отфильтровать список транзакций по определенному слову в описании? (Да/Нет)")
     user_answer = foolproof_user_input(['ДА', 'НЕТ'])
+    if user_answer == 'ДА':
+        search_bar = input('\nПрограмма: введите слово для фильтрации: ').lower()
+        transactions_list = get_required_operations_list(transactions_list, search_bar)
 
     print('Программа: Распечатываю итоговый список транзакций...')
     print(*transactions_list, sep='\n')
