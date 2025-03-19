@@ -5,8 +5,8 @@ def filter_by_state(operations: list[dict], state: str = 'EXECUTED') -> list[dic
     # убираем транзакции, в которых нет ключа "state"
     operations = [i for i in operations if not i.get('state') is None]
 
-    if all(operation['state'] != state for operation in operations):
-        raise ValueError('Нет операций с таким статусом')
+    if state not in ['EXECUTED', 'CANCELED', 'PENDING']:
+        raise ValueError('Ошибочный статус операции!')
 
     return [operation for operation in operations if operation.get('state') == state]
 
@@ -20,8 +20,7 @@ def sort_by_date(operations: list[dict], decreasing: bool = True) -> list[dict]:
     # убираем транзакции, в которых нет ключа "date"
     operations = [i for i in operations if not i.get('date') is None]
 
-    if any((len(operation['date']) != 26 or
-            not (operation['date'])[:4].isdigit() or
+    if any((not (operation['date'])[:4].isdigit() or
             not (operation['date'])[5:7].isdigit() or
             not (operation['date'])[8:10].isdigit())
            for operation in operations):

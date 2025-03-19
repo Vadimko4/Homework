@@ -90,11 +90,6 @@ def test_filter_by_currency_RUB(test_transaction_list: Any) -> None:
                }]
 
 
-def test_filter_by_currency_with_empty_list() -> None:
-    with pytest.raises(ValueError):
-        filter_by_currency([])
-
-
 def test_filter_by_currency_with_wrong_currency_in_list() -> None:
     with pytest.raises(ValueError):
         filter_by_currency([{"operationAmount": {"currency": {"name": "EUR", "code": "EEE"}}}])
@@ -103,11 +98,6 @@ def test_filter_by_currency_with_wrong_currency_in_list() -> None:
 def test_filter_by_currency_with_wrong_currency_request() -> None:
     with pytest.raises(ValueError):
         filter_by_currency([{"operationAmount": {"currency": {"name": "EUR", "code": "EUR"}}}], "EEE")
-
-
-def test_filter_by_currency_with_missing_currency() -> None:
-    with pytest.raises(ValueError):
-        filter_by_currency([{"operationAmount": {"currency": {"name": "EUR", "code": "EUR"}}}], 'BTC')
 
 
 def test_transaction_descriptions(test_transaction_list: Any) -> None:

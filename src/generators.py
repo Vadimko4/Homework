@@ -7,29 +7,39 @@ def filter_by_currency(transactions: list[dict], currency: str = 'USD') -> Any:
     возвращает итератор, который поочередно выдает транзакции, где валюта операции соответствует заданной
     в параметре currency
     """
-    if len(transactions) == 0:
-        raise ValueError('Список транзакций не может быть пустым')
 
     # убираем транзакции, в которых нет ключей "operationAmount", "currency", "code"
-    transactions = [i for i in transactions if not i.get("operationAmount") is None and
+    transactions = [i for i in transactions if (not i.get("operationAmount") is None and
                     not i.get("operationAmount").get("currency") is None and
-                    not i.get("operationAmount").get("currency").get("code") is None]
+                    not i.get("operationAmount").get("currency").get("code") is None) or
+                    (not i.get("currency_code") is None)]
+
+    if not transactions:
+        return []
+
+    if transactions[0].get("operationAmount") is None:
+        records_type = 'xls'
+    else:
+        records_type = 'json'
 
     #  некорректная валюта в списке транзакций
-    if any(i.get("operationAmount").get("currency").get("code").upper() not in 'USDEURRUBBTC'
-           for i in transactions if not i.get("operationAmount") is None):
-        raise ValueError('Ошибка в списке транзакций: нет такой валюты!')
+    if records_type == 'json':
+        if any(i.get("operationAmount").get("currency").get("code").upper() not in 'USDEURRUBBTC'
+               for i in transactions if not i.get("operationAmount") is None):
+            raise ValueError('Ошибка в списке транзакций: нет такой валюты!')
+    else:
+        if any(i.get("currency_code").upper() not in 'USDEURRUBBTC'
+               for i in transactions if not i.get("operationAmount") is None):
+            raise ValueError('Ошибка в списке транзакций: нет такой валюты!')
 
     #  некорректная валюта в параметре currency
     if currency.upper() not in 'USDEURRUBBTC':
         raise ValueError('Ошибка запроса: нет такой валюты!')
 
-    # валюта корректная, но таких операций в списке нет
-    if all(i.get("operationAmount").get("currency").get("code").upper() != currency.upper() for i in transactions
-           if not i.get("operationAmount")is None):
-        raise ValueError('В списке транзакций нет ни одной операции с такой валютой')
-
-    return filter(lambda x: x.get("operationAmount").get("currency").get("code") == currency.upper(), transactions)
+    if records_type == 'json':
+        return filter(lambda x: x.get("operationAmount").get("currency").get("code") == currency.upper(), transactions)
+    else:
+        return filter(lambda x: x.get("currency_code") == currency.upper(), transactions)
 
 
 def transaction_descriptions(transactions: list[dict]) -> Any:
