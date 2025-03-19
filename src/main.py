@@ -6,6 +6,7 @@ from src.tables import get_transactions_list_from_csv, get_transactions_list_fro
 from src.processing import filter_by_state, sort_by_date
 from src.generators import filter_by_currency
 from src.refinder import get_required_operations_list, get_categories_count
+from src.widget import get_date, mask_account_card
 
 
 def foolproof_user_input(valid_values: list[str]) -> str:
@@ -28,10 +29,13 @@ def main():
     user_cases = {'1': 'JSON-файл', '2': 'CSV-файл', '3': 'XLSX-файл'}
     print(f"\nПрограмма: для обработки выбран {user_cases[user_answer]}")
     if user_answer == '1':
+        records_type = 'json'
         transactions_list = get_fin_transactions_from_json(PATH_TO_JSON_FILE)
     elif user_answer == '2':
+        records_type = 'xls'
         transactions_list = get_transactions_list_from_csv(PATH_TO_TRANSACTIONS_CSV_FILE)
     else:
+        records_type = 'xls'
         transactions_list = get_transactions_list_from_xlsx(PATH_TO_TRANSACTIONS_XLSX_FILE)
 
     print("""\nПрограмма: Введите статус, по которому необходимо выполнить фильтрацию. 
@@ -55,7 +59,7 @@ def main():
     print("\nПрограмма: Выводить только рублевые тразакции? (Да/Нет)")
     user_answer = foolproof_user_input(['ДА', 'НЕТ'])
     if user_answer == 'ДА':
-        transactions_list = [transaction for transaction in filter_by_currency(transactions_list, 'RUB')]
+        transactions_list = [transaction for transaction in filter_by_currency(transactions_list, 'RUB', records_type)]
 
     print("\nПрограмма: Отфильтровать список транзакций по определенному слову в описании? (Да/Нет)")
     user_answer = foolproof_user_input(['ДА', 'НЕТ'])
@@ -73,11 +77,22 @@ def main():
         for key, value in categories_with_count_dict.items():
             print(f'{key}: {value}')
 
-        print()
         for i in transactions_list:
-            print()
-        print(*transactions_list, sep='\n')
+            print(f'\n{get_date(i.get("date"))} {i.get("description")}')
+
+            if i.get("description").lower() == "открытие вклада":
+                print(f'{mask_account_card(i.get("to"))}')
+            else:
+                print(f'{mask_account_card(i.get("from"))} -> {mask_account_card(i.get("to"))}')
+
+            if records_type == 'json':
+                print(f'Сумма: {i.get("operationAmount").get("amount")} {i.get("operationAmount")
+                      .get("currency").get("name")}')
+            else:
+                print(f'Сумма: {i.get("Amount")} {i.get("currency_name")}')
+
     else:
         print('\nПрограмма: Не найдено ни одной транзакции, подходящей под ваши условия фильтрации')
+
 
 main()

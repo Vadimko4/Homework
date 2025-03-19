@@ -1,9 +1,10 @@
 from typing import Any
 
 
-def filter_by_currency(transactions: list[dict], currency: str = 'USD') -> Any:
+def filter_by_currency(transactions: list[dict], currency: str = 'USD', records_type: str = 'json') -> Any:
     """
     принимает на вход список словарей, представляющих транзакции
+    records_type - определяет тип записей (различаются записи из json файла и csv/xlsx файлов
     возвращает итератор, который поочередно выдает транзакции, где валюта операции соответствует заданной
     в параметре currency
     """
@@ -17,10 +18,10 @@ def filter_by_currency(transactions: list[dict], currency: str = 'USD') -> Any:
     if not transactions:
         return []
 
-    if transactions[0].get("operationAmount") is None:
+    '''if transactions[0].get("operationAmount") is None:
         records_type = 'xls'
     else:
-        records_type = 'json'
+        records_type = 'json'''
 
     #  некорректная валюта в списке транзакций
     if records_type == 'json':
