@@ -86,8 +86,6 @@ def test_sort_by_same_date(test_processing_list_same_data: Any, decreasing: Any,
 
 
 @pytest.mark.parametrize('wrong_operation', [
-    ({'id': 42428829, 'state': 'EXECUTED', 'date': '2019-07-03'}),
-    ({'id': 949719570, 'state': 'EXECUTED', 'date': '2018-06-30T02:08:58.42557278787878787878787878'}),
     ({'id': 596226727, 'state': 'CANCELED', 'date': 'aaaa-09-12T21:27:25.241689'}),
     ({'id': 625064591, 'state': 'CANCELED', 'date': '2018-aa-14T08:21:33.419441'}),
     ({'id': 616064592, 'state': 'CANCELED', 'date': '2018-10-aaT08:21:33.419441'}),

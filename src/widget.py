@@ -36,9 +36,9 @@ def mask_account_card(account_card_information: str = '') -> str:
     for i in range(len(words)):
         if words[i][0].isdigit():
             if is_card:
-                words[i] = get_mask_card_number(int(words[i]))
+                words[i] = get_mask_card_number(words[i])
             else:
-                words[i] = get_mask_account(int(words[i]))
+                words[i] = get_mask_account(words[i])
     return ' '.join(words)
 
 
@@ -50,9 +50,6 @@ def get_date(date: str = '') -> str:
     if not date:
         raise ValueError('Поле даты не может быть пустым')
 
-    if len(date) != 26:
-        raise ValueError('Неверный формат даты')  # длина входной строки не равна 26 символов - больше или меньше
-
     if any(not i.isdigit() for i in (date[8: 10], date[5: 7], date[: 4])) or \
             (int(date[8: 10]) not in range(1, 32)) or (int(date[5: 7]) not in range(1, 13)):
         raise ValueError('Неверный формат даты')
@@ -60,6 +57,8 @@ def get_date(date: str = '') -> str:
     return f'{date[8: 10]}.{date[5: 7]}.{date[: 4]}'
 
 
-if __name__ == '__main__':
+'''if __name__ == '__main__':
     print(mask_account_card('Visa Classic 6831982476737658'))
     print(get_date('2024-03-11T02:26:18.671407'))
+    print(mask_account_card('American Express 5313948287096164'))
+    print(mask_account_card('Discover 0329774489991288'))'''

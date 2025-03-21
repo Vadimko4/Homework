@@ -2,10 +2,13 @@ def filter_by_state(operations: list[dict], state: str = 'EXECUTED') -> list[dic
     """
     Принимает список всех операций - возвращает только те, у которых статус = state
     """
-    if all(operation['state'] != state for operation in operations):
-        raise ValueError('Нет операций с таким статусом')
+    # убираем транзакции, в которых нет ключа "state"
+    operations = [i for i in operations if not i.get('state') is None]
 
-    return [i for i in operations if i['state'] == state]
+    if state not in ['EXECUTED', 'CANCELED', 'PENDING']:
+        raise ValueError('Ошибочный статус операции!')
+
+    return [operation for operation in operations if operation.get('state') == state]
 
 
 def sort_by_date(operations: list[dict], decreasing: bool = True) -> list[dict]:
@@ -14,8 +17,10 @@ def sort_by_date(operations: list[dict], decreasing: bool = True) -> list[dict]:
     Если decreasing = True (значение по умолчанию) - сортирует по убыванию,
     иначе по возрастанию
     """
-    if any((len(operation['date']) != 26 or
-            not (operation['date'])[:4].isdigit() or
+    # убираем транзакции, в которых нет ключа "date"
+    operations = [i for i in operations if not i.get('date') is None]
+
+    if any((not (operation['date'])[:4].isdigit() or
             not (operation['date'])[5:7].isdigit() or
             not (operation['date'])[8:10].isdigit())
            for operation in operations):
@@ -35,7 +40,8 @@ def sort_by_date(operations: list[dict], decreasing: bool = True) -> list[dict]:
         {'id': 939719570, 'state': 'EXECUTED', 'date': '2018-06-30T02:08:58.425572'},
         {'id': 594226727, 'state': 'CANCELED', 'date': '2018-09-12T21:27:25.241689'},
         {'id': 615064591, 'state': 'CANCELED', 'date': '2018-10-14T08:21:33.419441'},
-        {'id': 615064592, 'state': 'CANCELED', 'date': '2018-10-14T08:21:33.419441'}
+        {'id': 615064592, 'state': 'CANCELED', 'date': '2018-10-14T08:21:33.419441'},
+        {}
     ]
-    print(filter_by_state(test_list))
+    print(filter_by_state(test_list, 'EXECUTED'))
     print(sort_by_date(test_list, True))'''

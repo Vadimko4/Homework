@@ -47,7 +47,7 @@ def get_transaction_amount(transaction: dict) -> float:
     return float(result_amount)
 
 
-if __name__ == '__main__':
+'''if __name__ == '__main__':
     print(get_transaction_amount({
         "id": 41428829,
         "state": "EXECUTED",
@@ -59,4 +59,4 @@ if __name__ == '__main__':
                 "code": "USD"
             }
         }
-    }))
+    }))'''

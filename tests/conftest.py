@@ -94,3 +94,31 @@ def test_transaction_list() -> list[dict]:
             "from": "Visa Platinum 1246377376343588",
             "to": "Счет 14211924144426031657"
         }]
+
+
+@pytest.fixture()
+def test_transaction_list_xls() -> list[dict]:
+    return [
+        {
+            'id': '651026',
+            'state': 'EXECUTED',
+            'date': '2021-07-10T20:52:54Z',
+            'Amount': '27596',
+            'currency_name': 'Ruble',
+            'currency_code': 'RUB',
+            'from': '',
+            'to': 'Счет 41878599375303475996',
+            'description': 'Открытие вклада'
+        },
+        {
+            'id': '4653425',
+            'state': 'EXECUTED',
+            'date': '2020-03-10T07:48:21Z',
+            'Amount': '22131',
+            'currency_name': 'Ruble',
+            'currency_code': 'RUB',
+            'from': '',
+            'to': 'Счет 58936710508356884628',
+            'description': 'Открытие вклада'
+        }
+    ]

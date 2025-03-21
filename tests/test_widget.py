@@ -45,11 +45,9 @@ def test_get_empty_date() -> None:
         get_date()
 
 
-@pytest.mark.parametrize('date', [('11.03.2024'),
-                                  ('11111111111111111111111111111111111111111111111111111111111'),
-                                  ('-024-0a-1bT02:26:18.671407', '11.03.2024'),
-                                  ('2024-23-11T02:26:18.671407', '11.03.2024'),
-                                  ('2024-03-32T02:26:18.671407', '11.03.2024')])
+@pytest.mark.parametrize('date', [('-024-0a-1bT02:26:18.671407'),
+                                  ('2024-23-11T02:26:18.671407'),
+                                  ('2024-03-32T02:26:18.671407')])
 def test_get_wrong_date(date: Any) -> None:
     with pytest.raises(ValueError):
         get_date(date)
